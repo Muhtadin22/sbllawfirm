@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  /* Obsidian Palette (30% Secondary & Structure) */
+  --color-obsidian: #121316;
+  --color-obsidian-dark: #0A0B0C;
+  --color-obsidian-surface: #1B1D22;
+  --color-obsidian-border: #2A2E37;
+
+  /* Aged Cognac Palette (10% High-Contrast Accent) */
+  --color-cognac: #B87333;
+  --color-cognac-hover: #A06228;
+  --color-cognac-light: #E8CBB3;
+  --color-cognac-dark: #7A4418;
+
+  /* Pure White & Neutral (60% Dominant Canvas) */
+  --color-purewhite: #FFFFFF;
+  --color-surface-card: #F9FAFB;
+  --color-surface-muted: #F3F4F6;
+  --color-surface-border: #E5E7EB;
+
+  /* Typography Colors */
+  --color-charcoal: #1E232A;
+  --color-charcoal-muted: #4B5563;
+  --color-charcoal-light: #9CA3AF;
+}
+
+@layer base {
+  * {
+    border-color: #E5E7EB;
+  }
+  body {
+    background-color: #FFFFFF;
+    color: #1E232A;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    color: #121316;
+    font-family: 'Playfair Display', Georgia, serif;
+    letter-spacing: -0.02em;
+  }
+}
