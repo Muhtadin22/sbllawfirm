@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { LanguageProvider } from "@/context/LanguageContext";
 
-const siteUrl = "https://www.sbllawfirm.co.id"; // Ganti dengan domain resmi Anda
+const siteUrl = "https://www.sbllawfirm.co.id";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -44,7 +47,7 @@ export const metadata: Metadata = {
     siteName: "SBL Law Firm",
     images: [
       {
-        url: "/og-image.jpg", // Letakkan gambar logo 1200x630px di folder public
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "SBL Law Firm Jakarta",
@@ -71,7 +74,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // Schema.org LegalService Structured Data untuk Rich Snippets Google
   const legalServiceSchema = {
     "@context": "https://schema.org",
     "@type": "LegalService",
@@ -100,10 +102,6 @@ export default function RootLayout({
       opens: "08:30",
       closes: "18:00",
     },
-    sameAs: [
-      "https://www.linkedin.com/company/sbl-law-firm",
-      "https://www.instagram.com/sbllawfirm",
-    ],
   };
 
   return (
@@ -116,7 +114,13 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>{children}</body>
+      <body className="antialiased bg-[#121316] text-[#1E232A]">
+        <LanguageProvider>
+          <Navbar />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
+        </LanguageProvider>
+      </body>
     </html>
   );
 }
