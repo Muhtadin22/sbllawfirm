@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { LanguageProvider } from "@/context/LanguageContext";
 
-const siteUrl = "https://www.sbllawfirm.co.id";
+const siteUrl = "https://www.sbllawfirm.my.id"; // Sesuaikan dengan domain resmi Anda
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
