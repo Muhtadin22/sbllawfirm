@@ -7,10 +7,9 @@ import { LanguageProvider } from "@/context/LanguageContext";
 const siteUrl = "https://www.sbllawfirm.my.id"; // Sesuaikan dengan domain resmi Anda
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: {
-    default: "SBL Law Firm | Kantor Advokat & Konsultan Hukum SCBD Jakarta",
-    template: "%s | SBL Law Firm Jakarta",
+  // ... metadata Anda yang lain ...
+  verification: {
+    google: "wxKUc0Jxtz0MyFhfTtQCD-2n27dUlEDgqJahBEVUQ6w", // Tempelkan kode unik Anda di sini
   },
   description:
     "Firma hukum korporasi dan litigasi terkemuka di Jakarta SCBD. Spesialisasi penanganan sengketa perdata bisnis, pembelaan pidana korporasi, kepailitan & PKPU, dan audit hukum.",
