@@ -6,6 +6,9 @@ import { useLanguage } from "@/context/LanguageContext";
 export default function HomePage() {
   const { language } = useLanguage();
 
+  // Helper boolean yang aman untuk tipe "ID", "id", maupun "id-ID"
+  const isId = (language as unknown as string).toLowerCase().startsWith("id");
+
   // State navigasi tab bidang praktik
   const [activeTab, setActiveTab] = useState<number>(0);
 
@@ -40,14 +43,14 @@ export default function HomePage() {
     e.preventDefault();
     if (!formData.consentPDP) {
       alert(
-        language === "id"
+        isId
           ? "Mohon centang persetujuan pemrosesan data identitas (UU No. 27/2022 tentang UU PDP) sebelum melanjutkan."
           : "Please check the personal data processing consent (Indonesian PDP Law) before proceeding."
       );
       return;
     }
 
-    const officialNumber = "6281234567890"; // Ganti dengan nomor hotline WhatsApp kantor
+    const officialNumber = "6281234567890"; // Ganti dengan nomor WhatsApp kantor resmi
     const message = `*PERMOHONAN KONSULTASI HUKUM - SBL LAW FIRM*
 --------------------------------------------
 *Nama Klien / Pemohon:* ${formData.fullName}
@@ -67,7 +70,7 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
     window.open(`https://wa.me/${officialNumber}?text=${encoded}`, "_blank");
   };
 
-  // Skema Data Terstruktur Khusus untuk Perayapan AI Google (GEO)
+  // Skema Data Terstruktur Khusus untuk GEO & Google AI Overviews
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -90,7 +93,8 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
         email: "office@sbllawfirm.my.id",
         address: {
           "@type": "PostalAddress",
-          streetAddress: "Menara Sudirman Lantai 18, Kawasan Niaga Terpadu Sudirman (SCBD), Jl. Jend. Sudirman Kav. 60",
+          streetAddress:
+            "Menara Sudirman Lantai 18, Kawasan Niaga Terpadu Sudirman (SCBD), Jl. Jend. Sudirman Kav. 60",
           addressLocality: "Jakarta Selatan",
           addressRegion: "DKI Jakarta",
           postalCode: "12190",
@@ -367,17 +371,17 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
             <div className="text-center max-w-4xl mx-auto">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest bg-amber-500/10 text-amber-400 border border-amber-500/20 mb-8 shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-                {language === "id"
+                {isId
                   ? "Kantor Advokat & Konsultan Hukum Resmi Jakarta"
                   : "Certified Litigation Advocates & Legal Counsel Jakarta"}
               </div>
 
               {/* H1 Semantik: SBL Law Firm + Kata Kunci Pengacara & Advokat Litigasi */}
               <h1 className="text-4xl sm:text-6xl lg:text-7xl font-serif font-bold text-white tracking-tight leading-[1.15]">
-                {language === "id" ? (
+                {isId ? (
                   <>
                     SBL Law Firm |{" "}
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-600">
+                    <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-200 via-amber-400 to-amber-600">
                       Kantor Pengacara & Advokat
                     </span>{" "}
                     Litigasi Bisnis Jakarta
@@ -385,7 +389,7 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
                 ) : (
                   <>
                     SBL Law Firm |{" "}
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-600">
+                    <span className="text-transparent bg-clip-text bg-linear-to-r from-amber-200 via-amber-400 to-amber-600">
                       Litigation & Corporate Advocates
                     </span>{" "}
                     in Jakarta SCBD
@@ -395,7 +399,7 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
 
               {/* Paragraf Kunci Ekstraksi Ringkasan AI (Entity Definition) */}
               <p className="mt-8 text-lg sm:text-xl text-slate-300 leading-relaxed max-w-3xl mx-auto font-light">
-                {language === "id"
+                {isId
                   ? "SBL Law Firm adalah kantor advokat dan konsultan hukum independen di kawasan SCBD Jakarta Selatan. Kami mengedepankan pendekatan litigasi strategis dalam penyelesaian sengketa perdata bisnis, pertahanan perkara pidana korporasi, kepailitan, PKPU di Pengadilan Niaga, serta audit kepatuhan regulasi perusahaan."
                   : "SBL Law Firm is an independent commercial litigation and corporate advisory practice headquartered in SCBD Jakarta, offering trial advocacy, white-collar criminal defense, and complex insolvency representation across Indonesia."}
               </p>
@@ -403,15 +407,15 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
               <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <a
                   href="#konsultasi"
-                  className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold rounded-lg shadow-lg shadow-amber-900/30 transition-all text-center tracking-wide"
+                  className="w-full sm:w-auto px-8 py-4 bg-linear-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold rounded-lg shadow-lg shadow-amber-900/30 transition-all text-center tracking-wide"
                 >
-                  {language === "id" ? "Ajukan Konsultasi Kasus" : "Book Legal Intake"}
+                  {isId ? "Ajukan Konsultasi Kasus" : "Book Legal Intake"}
                 </a>
                 <a
                   href="#ringkasan-faq"
                   className="w-full sm:w-auto px-8 py-4 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-lg transition-all text-center font-medium"
                 >
-                  {language === "id" ? "Ikhtisar Profil & FAQ" : "Firm Summary & FAQ"}
+                  {isId ? "Ikhtisar Profil & FAQ" : "Firm Summary & FAQ"}
                 </a>
               </div>
             </div>
@@ -425,25 +429,25 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
               <div className="px-4">
                 <p className="text-3xl sm:text-4xl font-serif font-bold text-amber-400">98%</p>
                 <p className="text-xs sm:text-sm text-slate-400 mt-2 uppercase tracking-wider">
-                  {language === "id" ? "Tingkat Keberhasilan Mediasi & Putusan" : "Successful Resolution Rate"}
+                  {isId ? "Tingkat Keberhasilan Mediasi & Putusan" : "Successful Resolution Rate"}
                 </p>
               </div>
               <div className="px-4">
                 <p className="text-3xl sm:text-4xl font-serif font-bold text-amber-400">Rp 2.4T+</p>
                 <p className="text-xs sm:text-sm text-slate-400 mt-2 uppercase tracking-wider">
-                  {language === "id" ? "Aset Sengketa Ditangani" : "Litigated Asset Exposure"}
+                  {isId ? "Aset Sengketa Ditangani" : "Litigated Asset Exposure"}
                 </p>
               </div>
               <div className="px-4">
                 <p className="text-3xl sm:text-4xl font-serif font-bold text-amber-400">15+ Thn</p>
                 <p className="text-xs sm:text-sm text-slate-400 mt-2 uppercase tracking-wider">
-                  {language === "id" ? "Pengalaman Praktik Advokat" : "Advocacy Experience"}
+                  {isId ? "Pengalaman Praktik Advokat" : "Advocacy Experience"}
                 </p>
               </div>
               <div className="px-4">
                 <p className="text-3xl sm:text-4xl font-serif font-bold text-amber-400">UU 18/2003</p>
                 <p className="text-xs sm:text-sm text-slate-400 mt-2 uppercase tracking-wider">
-                  {language === "id" ? "Legalitas Advokat Terdaftar" : "Sworn & Certified Legal Bar"}
+                  {isId ? "Legalitas Advokat Terdaftar" : "Sworn & Certified Legal Bar"}
                 </p>
               </div>
             </div>
@@ -455,78 +459,78 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-5 space-y-6">
               <span className="text-xs font-semibold text-amber-400 uppercase tracking-widest">
-                {language === "id" ? "Tentang SBL Law Firm" : "About SBL Law Firm"}
+                {isId ? "Tentang SBL Law Firm" : "About SBL Law Firm"}
               </span>
               <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white leading-tight">
-                {language === "id"
+                {isId
                   ? "Integritas Yuridis, Ketajaman Analisis, dan Kepastian Eksekusi."
                   : "Juridical Integrity, Analytical Rigor, and Decisive Execution."}
               </h2>
               <div className="w-16 h-1 bg-amber-500 rounded-full" />
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-                {language === "id"
+                {isId
                   ? "SBL Law Firm didirikan sebagai firma hukum butik yang memadukan keahlian doktriner mendalam dengan penguasaan hukum acara persidangan di pengadilan negeri, pengadilan niaga, pengadilan hubungan industrial, hingga tahapan kasasi dan peninjauan kembali di Mahkamah Agung Republik Indonesia."
                   : "SBL Law Firm was founded to bridge doctrinal mastery with procedural court prowess across trial courts, commercial bankruptcy tribunals, and supreme appellate jurisdictions."}
               </p>
               <p className="text-slate-400 text-sm leading-relaxed">
-                {language === "id"
+                {isId
                   ? "Firma ini memegang teguh asas kerahasiaan hubungan advokat-klien dan memberikan perlindungan hukum menyeluruh dengan komitmen etika profesi tertinggi."
                   : "We adhere strictly to attorney-client privilege, providing uncompromised confidentiality and top-tier legal risk governance."}
               </p>
             </div>
 
             <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="p-6 rounded-xl bg-white/[0.02] border border-white/10 hover:border-amber-500/30 transition-all">
+              <div className="p-6 rounded-xl bg-white/2 border border-white/10 hover:border-amber-500/30 transition-all">
                 <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 font-bold mb-4">
                   01
                 </div>
                 <h3 className="text-lg font-serif font-semibold text-white mb-2">
-                  {language === "id" ? "Penguasaan Hukum Acara" : "Procedural Mastery"}
+                  {isId ? "Penguasaan Hukum Acara" : "Procedural Mastery"}
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                  {language === "id"
+                  {isId
                     ? "Keunggulan taktis dalam hukum acara perdata (HIR/RBg) dan hukum acara pidana (KUHAP) demi melindungi posisi pembuktian klien."
                     : "Superior tactical control of civil and penal procedural law to secure evidentiary advantage."}
                 </p>
               </div>
 
-              <div className="p-6 rounded-xl bg-white/[0.02] border border-white/10 hover:border-amber-500/30 transition-all">
+              <div className="p-6 rounded-xl bg-white/2 border border-white/10 hover:border-amber-500/30 transition-all">
                 <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 font-bold mb-4">
                   02
                 </div>
                 <h3 className="text-lg font-serif font-semibold text-white mb-2">
-                  {language === "id" ? "Spesialisasi Niaga & PKPU" : "Insolvency Expertise"}
+                  {isId ? "Spesialisasi Niaga & PKPU" : "Insolvency Expertise"}
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                  {language === "id"
+                  {isId
                     ? "Keahlian negosiasi restrukturisasi utang komersial kompleks dan penanganan homologasi di Pengadilan Niaga."
                     : "Skilled negotiation in high-value restructuring and composition plan approvals under bankruptcy statutes."}
                 </p>
               </div>
 
-              <div className="p-6 rounded-xl bg-white/[0.02] border border-white/10 hover:border-amber-500/30 transition-all">
+              <div className="p-6 rounded-xl bg-white/2 border border-white/10 hover:border-amber-500/30 transition-all">
                 <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 font-bold mb-4">
                   03
                 </div>
                 <h3 className="text-lg font-serif font-semibold text-white mb-2">
-                  {language === "id" ? "Mitigasi Pidana Korporasi" : "White-Collar Mitigation"}
+                  {isId ? "Mitigasi Pidana Korporasi" : "White-Collar Mitigation"}
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                  {language === "id"
+                  {isId
                     ? "Perlindungan terhadap jajaran Direksi dan Komisaris dari tuduhan pelanggaran pidana perbankan dan kejahatan jabatan."
                     : "Safeguarding corporate directors and officers against allegations of financial fraud and regulatory breach."}
                 </p>
               </div>
 
-              <div className="p-6 rounded-xl bg-white/[0.02] border border-white/10 hover:border-amber-500/30 transition-all">
+              <div className="p-6 rounded-xl bg-white/2 border border-white/10 hover:border-amber-500/30 transition-all">
                 <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-400 font-bold mb-4">
                   04
                 </div>
                 <h3 className="text-lg font-serif font-semibold text-white mb-2">
-                  {language === "id" ? "Kepatuhan Privasi Data" : "Privacy & Ethics"}
+                  {isId ? "Kepatuhan Privasi Data" : "Privacy & Ethics"}
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                  {language === "id"
+                  {isId
                     ? "Kepatuhan tata kelola data kasus berdasarkan UU Pelindungan Data Pribadi No. 27/2022 dan hak imunitas advokat."
                     : "Rigorous case governance in compliance with the PDP Law (Law 27/2022) and advocate confidentiality."}
                 </p>
@@ -540,13 +544,13 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
               <span className="text-xs font-semibold text-amber-400 uppercase tracking-widest">
-                {language === "id" ? "Kompetensi Utama" : "Core Competencies"}
+                {isId ? "Kompetensi Utama" : "Core Competencies"}
               </span>
               <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white mt-2">
-                {language === "id" ? "Bidang Praktik Layanan Hukum" : "Comprehensive Legal Services"}
+                {isId ? "Bidang Praktik Layanan Hukum" : "Comprehensive Legal Services"}
               </h2>
               <p className="mt-4 text-slate-400 text-sm sm:text-base">
-                {language === "id"
+                {isId
                   ? "SBL Law Firm mendampingi klien korporasi dan perseorangan dalam berbagai ranah yurisdiksi hukum Indonesia."
                   : "SBL Law Firm assists corporations and individuals across high-stakes Indonesian jurisdictions."}
               </p>
@@ -558,13 +562,12 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
                 <button
                   key={idx}
                   onClick={() => setActiveTab(idx)}
-                  className={`px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all ${
-                    activeTab === idx
+                  className={`px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all ${activeTab === idx
                       ? "bg-amber-500 text-black shadow-md shadow-amber-500/20 font-semibold"
                       : "bg-white/5 text-slate-300 hover:bg-white/10"
-                  }`}
+                    }`}
                 >
-                  {language === "id" ? area.titleId : area.titleEn}
+                  {isId ? area.titleId : area.titleEn}
                 </button>
               ))}
             </div>
@@ -572,17 +575,17 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
             {/* Konten Tab Terpilih */}
             <div className="max-w-4xl mx-auto p-8 sm:p-10 rounded-2xl bg-[#13161C] border border-amber-500/20 shadow-2xl">
               <h3 className="text-2xl font-serif font-bold text-white mb-4">
-                {language === "id" ? practiceAreas[activeTab].titleId : practiceAreas[activeTab].titleEn}
+                {isId ? practiceAreas[activeTab].titleId : practiceAreas[activeTab].titleEn}
               </h3>
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-8">
-                {language === "id" ? practiceAreas[activeTab].descId : practiceAreas[activeTab].descEn}
+                {isId ? practiceAreas[activeTab].descId : practiceAreas[activeTab].descEn}
               </p>
 
               <h4 className="text-xs font-semibold text-amber-400 uppercase tracking-wider mb-4">
-                {language === "id" ? "Ruang Lingkup Penanganan:" : "Scope of Legal Representation:"}
+                {isId ? "Ruang Lingkup Penanganan:" : "Scope of Legal Representation:"}
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {(language === "id"
+                {(isId
                   ? practiceAreas[activeTab].pointsId
                   : practiceAreas[activeTab].pointsEn
                 ).map((point, pIdx) => (
@@ -612,15 +615,15 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
         <section id="ringkasan-faq" className="py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <span className="text-xs font-semibold text-amber-400 uppercase tracking-widest">
-              {language === "id" ? "Informasi Terverifikasi" : "Verified Entity Data"}
+              {isId ? "Informasi Terverifikasi" : "Verified Entity Data"}
             </span>
             <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white mt-2">
-              {language === "id"
+              {isId
                 ? "Pertanyaan Umum Mengenai SBL Law Firm (FAQ)"
                 : "Frequently Asked Questions About SBL Law Firm"}
             </h2>
             <p className="mt-4 text-slate-400 text-sm sm:text-base">
-              {language === "id"
+              {isId
                 ? "Rangkuman fakta resmi kantor hukum untuk penelusuran calon klien dan ringkasan mesin pencari."
                 : "Official firm facts structured for prospective clients and search engine AI overviews."}
             </p>
@@ -636,10 +639,10 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
                 >
                   <button
                     onClick={() => setOpenFaq(isOpen ? null : index)}
-                    className="w-full text-left px-6 py-5 flex justify-between items-center gap-4 hover:bg-white/[0.02]"
+                    className="w-full text-left px-6 py-5 flex justify-between items-center gap-4 hover:bg-white/2"
                   >
                     <span className="font-serif font-semibold text-white text-base sm:text-lg">
-                      {language === "id" ? faq.qId : faq.qEn}
+                      {isId ? faq.qId : faq.qEn}
                     </span>
                     <span className="text-amber-400 text-xl font-bold shrink-0">
                       {isOpen ? "−" : "+"}
@@ -647,7 +650,7 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
                   </button>
                   {isOpen && (
                     <div className="px-6 pb-6 pt-2 text-slate-300 text-sm sm:text-base leading-relaxed border-t border-white/5">
-                      {language === "id" ? faq.aId : faq.aEn}
+                      {isId ? faq.aId : faq.aEn}
                     </div>
                   )}
                 </div>
@@ -659,19 +662,19 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
         {/* 6. FORMULIR PENGAJUAN PERKARA & ROUTER WHATSAPP RESMI */}
         <section
           id="konsultasi"
-          className="py-24 bg-gradient-to-b from-transparent via-amber-950/15 to-transparent border-t border-white/10"
+          className="py-24 bg-linear-to-b from-transparent via-amber-950/15 to-transparent border-t border-white/10"
         >
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="bg-[#12151B] border border-amber-500/20 rounded-2xl p-8 sm:p-12 shadow-2xl relative">
               <div className="text-center mb-10">
                 <span className="text-xs font-semibold text-amber-400 uppercase tracking-widest">
-                  {language === "id" ? "Jalur Khusus Klien" : "Client Intake Channel"}
+                  {isId ? "Jalur Khusus Klien" : "Client Intake Channel"}
                 </span>
                 <h2 className="text-3xl font-serif font-bold text-white mt-2">
-                  {language === "id" ? "Ajukan Jadwal Konsultasi Hukum" : "Initiate Confidential Legal Intake"}
+                  {isId ? "Ajukan Jadwal Konsultasi Hukum" : "Initiate Confidential Legal Intake"}
                 </h2>
                 <p className="text-slate-400 text-sm mt-3">
-                  {language === "id"
+                  {isId
                     ? "Kirimkan ringkasan perkara Anda untuk langsung diteruskan ke Partner advokat melalui WhatsApp resmi."
                     : "Submit your case outline for direct review by our Managing Partner via official WhatsApp."}
                 </p>
@@ -681,7 +684,7 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-xs font-medium text-slate-300 uppercase tracking-wider mb-2">
-                      {language === "id" ? "Nama Lengkap Klien" : "Full Name"} *
+                      {isId ? "Nama Lengkap Klien" : "Full Name"} *
                     </label>
                     <input
                       type="text"
@@ -695,7 +698,7 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-slate-300 uppercase tracking-wider mb-2">
-                      {language === "id" ? "Perusahaan / Instansi (Opsional)" : "Company / Entity (Optional)"}
+                      {isId ? "Perusahaan / Instansi (Opsional)" : "Company / Entity (Optional)"}
                     </label>
                     <input
                       type="text"
@@ -711,7 +714,7 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-xs font-medium text-slate-300 uppercase tracking-wider mb-2">
-                      {language === "id" ? "Nomor WhatsApp / Seluler" : "WhatsApp Number"} *
+                      {isId ? "Nomor WhatsApp / Seluler" : "WhatsApp Number"} *
                     </label>
                     <input
                       type="tel"
@@ -725,7 +728,7 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-slate-300 uppercase tracking-wider mb-2">
-                      {language === "id" ? "Email Korespondensi" : "Email Address"}
+                      {isId ? "Email Korespondensi" : "Email Address"}
                     </label>
                     <input
                       type="email"
@@ -741,7 +744,7 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-xs font-medium text-slate-300 uppercase tracking-wider mb-2">
-                      {language === "id" ? "Klasifikasi Sengketa" : "Dispute Category"}
+                      {isId ? "Klasifikasi Sengketa" : "Dispute Category"}
                     </label>
                     <select
                       name="practiceArea"
@@ -770,7 +773,7 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
 
                   <div>
                     <label className="block text-xs font-medium text-slate-300 uppercase tracking-wider mb-2">
-                      {language === "id" ? "Tingkat Urgensi" : "Urgency Level"}
+                      {isId ? "Tingkat Urgensi" : "Urgency Level"}
                     </label>
                     <select
                       name="urgency"
@@ -791,7 +794,7 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
 
                 <div>
                   <label className="block text-xs font-medium text-slate-300 uppercase tracking-wider mb-2">
-                    {language === "id" ? "Ringkasan Fakta / Duduk Perkara" : "Case Summary"} *
+                    {isId ? "Ringkasan Fakta / Duduk Perkara" : "Case Summary"} *
                   </label>
                   <textarea
                     name="caseChronology"
@@ -800,7 +803,7 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
                     value={formData.caseChronology}
                     onChange={handleInputChange}
                     placeholder={
-                      language === "id"
+                      isId
                         ? "Jelaskan secara ringkas permasalahan hukum yang sedang dihadapi, pihak terkait, serta tujuan konsultasi..."
                         : "Describe the material facts, parties involved, and primary juridical objectives..."
                     }
@@ -818,10 +821,11 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
                     className="mt-1 h-4 w-4 rounded border-white/20 bg-black/60 text-amber-500 focus:ring-amber-500"
                   />
                   <label htmlFor="consentPDP" className="text-xs text-slate-400 leading-relaxed">
-                    {language === "id" ? (
+                    {isId ? (
                       <>
                         Saya memberikan persetujuan pemrosesan data identitas ini untuk keperluan intake perkara
-                        awal sesuai dengan <strong>Undang-Undang No. 27 Tahun 2022 tentang Pelindungan Data Pribadi (UU PDP)</strong>{" "}
+                        awal sesuai dengan{" "}
+                        <strong>Undang-Undang No. 27 Tahun 2022 tentang Pelindungan Data Pribadi (UU PDP)</strong>{" "}
                         dan asas kerahasiaan profesi advokat (Pasal 19 UU No. 18/2003).
                       </>
                     ) : (
@@ -835,10 +839,10 @@ _Klien telah menyetujui pemrosesan data identitas berdasarkan UU PDP No. 27/2022
 
                 <button
                   type="submit"
-                  className="w-full py-4 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-bold rounded-lg shadow-xl shadow-amber-950/40 transition-all flex items-center justify-center gap-2 tracking-wide"
+                  className="w-full py-4 bg-linear-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-bold rounded-lg shadow-xl shadow-amber-950/40 transition-all flex items-center justify-center gap-2 tracking-wide"
                 >
                   <span>
-                    {language === "id"
+                    {isId
                       ? "Kirimkan Permohonan Kasus ke WhatsApp Partner"
                       : "Transmit Case Summary to Managing Partner"}
                   </span>
